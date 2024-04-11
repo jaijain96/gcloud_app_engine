@@ -38,7 +38,7 @@ class UserView(MethodView):
         user_repr = {"name": request_data["name"]}
         self.user_dao.put_user_into_db(user_id, user_repr)
 
-        self.bucket_list_dao.put_bucket_list_into_db(user_id, [])
+        # self.bucket_list_dao.put_bucket_list_into_db(user_id, [])
         return Response(
             response=json.dumps({"user created": user_repr}),
             status=201,  # 201: created
@@ -51,14 +51,21 @@ class UserView(MethodView):
         if not user_obj:
             return Response(response=f"user {user_id} doesn't exist", status=404)
 
-        self.user_dao.update_user_in_db(user_id, request_data["name"])
-        return {"user": user_obj}
+        # self.user_dao.update_user_in_db(user_id, request_data["name"])
+        updates = {"name": request_data["name"]}
+        updated_repr = self.user_dao.update_user_in_db(user_id, updates)
+        if updated_repr:
+            return {"user updated": updated_repr}
+        else:
+            return Response(response=f"unable to update user: {user_id}", status=500)
 
     def delete(self, user_id):
         user_obj = self.user_dao.get_user_from_db(user_id)
         if not user_obj:
             return Response(response=f"user {user_id} doesn't exist", status=404)
 
-        self.bucket_list_dao.delete_bucket_list_from_db(user_id)
-        self.user_dao.delete_user_from_db(user_id)
-        return {"user": user_obj}
+        # self.bucket_list_dao.delete_bucket_list_from_db(user_id)
+        if self.user_dao.delete_user_from_db(user_id):
+            return {"user deleted": user_obj}
+        else:
+            return Response(response=f"unable to delete user: {user_id}", status=500)
