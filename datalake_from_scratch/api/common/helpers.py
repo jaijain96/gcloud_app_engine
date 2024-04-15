@@ -1,4 +1,6 @@
 import numpy as np
+# from flask_httpauth import HTTPBasicAuth
+# from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def load_dict(filepath):
@@ -19,3 +21,11 @@ def save_dict(data_dict, filepath):
 # bucket_dict = load_dict("api/data/bucket_dict.npy")
 # bucket_list_dict = load_dict("api/data/bucket_list_dict.npy")
 # object_dict = load_dict("api/data/object_dict.npy")
+
+# auth = HTTPBasicAuth()
+
+# @auth.verify_password
+# def verify_password(username, password):
+#     if username in users and \
+#             check_password_hash(users.get(username), password):
+#     return username

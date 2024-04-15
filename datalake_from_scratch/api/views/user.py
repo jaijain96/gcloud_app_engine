@@ -3,12 +3,26 @@ defines user resource
 """
 from flask import request, Response
 from flask.views import MethodView
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.daos.user_dao import UserDao
 from api.daos.bucket_list_dao import BucketListDao
 
 import json
 
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username, password):
+    user_dao = UserDao()
+    user_obj = user_dao.get_user_from_db(
+        username
+    )
+    # if not user_obj:
+    #     return Response(response=f"user {user_id} doesn't exist", status=404)
+    if user_obj and check_password_hash(user_obj.get("password"), password):
+        return user_obj
 
 class UserView(MethodView):
     def __init__(self):
@@ -16,10 +30,22 @@ class UserView(MethodView):
         self.user_dao = UserDao()
         self.bucket_list_dao = BucketListDao()
 
+    # @auth.verify_password
+    # def verify_password(self, username, password):
+    #     user_obj = self.user_dao.get_user_from_db(
+    #         username
+    #     )
+    #     # if not user_obj:
+    #     #     return Response(response=f"user {user_id} doesn't exist", status=404)
+    #     if user_obj and check_password_hash(user_obj.get("password"), password):
+    #         return user_obj
+    
+    @auth.login_required
     def get(self, user_id):
-        user_obj = self.user_dao.get_user_from_db(
-            user_id
-        )  # can use pydantic for request json parsing for type checks etc.
+        user_obj = auth.current_user()
+        # user_obj = self.user_dao.get_user_from_db(
+        #     user_id
+        # )  # can use pydantic for request json parsing for type checks etc.
         if not user_obj:
             return Response(response=f"user {user_id} doesn't exist", status=404)
 
@@ -35,7 +61,8 @@ class UserView(MethodView):
                 status=409,  # 409: conflict
             )
 
-        user_repr = {"name": request_data["name"]}
+        # user_repr = {"name": request_data["name"]}
+        user_repr = {"password": request_data["password"]}
         self.user_dao.put_user_into_db(user_id, user_repr)
 
         # self.bucket_list_dao.put_bucket_list_into_db(user_id, [])
