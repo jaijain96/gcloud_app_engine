@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-xeyc+(6mj#q7fx(dx$(6&+4^tx694f%%j+gi&4qlol5@!&#2hy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["datalake-django-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"]
 
 # CSRF_COOKIE_SECURE = False
 # CSRF_COOKIE_HTTPONLY = False
@@ -84,12 +85,15 @@ WSGI_APPLICATION = 'datalake_from_scratch.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+# postgres://root:datalake-django-db@//cloudsql/PROJECT_ID:REGION:INSTANCE_NAME/DATABASE_NAME
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "datalake_django",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+        # "HOST": "127.0.0.1",
+        # "HOST": "34.134.123.129",
+        # "PORT": "3306",
+        "HOST": "/cloudsql/gcloud-hands-on-417608:us-central1:datalake-django-db",
         "USER": "root",
         "PASSWORD": "datalake-django-db"
     }

@@ -4,6 +4,7 @@ import requests
 base_url = "http://127.0.0.1"
 # base_url = "https://gcloud-hands-on-417608.uc.r.appspot.com"
 # base_url = "https://datalake-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"
+base_url = "https://datalake-django-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"
 port = "8000"
 
 auth_token = "ya29.a0Ad52N38cyCD4mYfRWdv86KE1ylSOrlEovt1jqBtUpuiYlpRmZ0_cerK7gmqNMIRs2vxknaCkrY9MVblnPwnrlsngUGUzK-anQkSuu5Sskl9VGC8gHXNKYYnP5x810KDN-zHzkJoBwCyE5Rzs0dV2uBO6KUvlWdRXlmAFWZlX_AaCgYKAXoSARESFQHGX2Mi4GqXCV7HUaMmycSl6F1etA0177"
@@ -23,8 +24,8 @@ endpoint_list = ["user", "bucket", "bucket_list", "object", "operation"]
 
 # ------------------------------------------------------------------------
 print("====================================================================")
-url = f"{base_url}:{port}/user"
-# url = f"{base_url}/user"
+# url = f"{base_url}:{port}/user"
+url = f"{base_url}/user"
 
 # user_pass_basic_auth = ("jaijain", "hello")
 # response = requests.get(f"{url}/jaijain", auth=user_pass_basic_auth)

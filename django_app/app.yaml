@@ -6,6 +6,8 @@ instance_class: F4
 
 # entrypoint: gunicorn -b :$PORT main:app
 # entrypoint: flask --app api run --port $PORT --with-threads
+# entrypoint: python manage.py runserver
+entrypoint: gunicorn datalake_from_scratch.wsgi
 
 # handlers:
 #   # This configures Google App Engine to serve the files in the app's static
