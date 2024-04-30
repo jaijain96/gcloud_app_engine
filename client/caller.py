@@ -2,7 +2,6 @@ import asyncio, functools, time
 import requests
 
 base_url = "http://127.0.0.1"
-# base_url = "https://gcloud-hands-on-417608.uc.r.appspot.com"
 # base_url = "https://datalake-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"
 base_url = "https://datalake-django-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"
 port = "8000"
