@@ -90,12 +90,6 @@ DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "datalake_django",
-        # "HOST": "127.0.0.1",
-        # "HOST": "34.134.123.129",
-        # "PORT": "3306",
-        "HOST": "/cloudsql/gcloud-hands-on-417608:us-central1:datalake-django-db",
-        "USER": "root",
-        "PASSWORD": "datalake-django-db"
     }
 }
 
