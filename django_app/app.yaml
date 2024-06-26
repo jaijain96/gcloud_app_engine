@@ -1,0 +1,8 @@
+runtime: python311
+
+service: datalake-django-api
+
+instance_class: F4
+
+# entrypoint: flask --app api run --port $PORT --with-threads
+entrypoint: gunicorn datalake_from_scratch.wsgi
