@@ -5,4 +5,8 @@ service: datalake-django-api
 instance_class: F4
 
 # entrypoint: flask --app api run --port $PORT --with-threads
-entrypoint: gunicorn datalake_from_scratch.wsgi
+entrypoint: gunicorn -c configs/gunicorn_config.py datalake_from_scratch.wsgi
+# entrypoint: gunicorn -c configs/gunicorn_config.py datalake_from_scratch.wsgi:application
+
+vpc_access_connector:
+  name: projects/gcloud-hands-on-417608/locations/us-central1/connectors/test-connector

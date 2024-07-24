@@ -2,7 +2,9 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.views import View
 from datalake import models
+from django.core.cache import cache
 import json
+
 
 # Create your views here.
 class UserView(View):
@@ -20,7 +22,7 @@ class UserView(View):
     # #     #     return Response(response=f"user {user_id} doesn't exist", status=404)
     # #     if user_obj and check_password_hash(user_obj.get("password"), password):
     # #         return user_obj
-    
+
     # @auth.login_required
     # def get(self, user_id):
     #     user_obj = auth.current_user()
@@ -48,8 +50,13 @@ class UserView(View):
     #     #     return Response(response=f"user {user_id} doesn't exist", status=404)
     #     if user_obj and check_password_hash(user_obj.get("password"), password):
     #         return user_obj
-    
+
     def get(self, request, user_id):
+        count = cache.get("counter")
+        if count is None:
+            count = 0
+        count += 1
+        cache.set("counter", count, 3600)
         try:
             user_model = models.User.objects.get(name=user_id)
         except models.User.DoesNotExist:
@@ -62,7 +69,7 @@ class UserView(View):
         # )  # can use pydantic for request json parsing for type checks etc.
         # if not user_obj:
         #     return Response(response=f"user {user_id} doesn't exist", status=404)
-        return HttpResponse(json.dumps({"name": user_model.name}))
+        return HttpResponse(json.dumps({"name": user_model.name, "hit_count": count}))
 
     def put(self, request, user_id):
         request_body = json.loads(request.body.decode())

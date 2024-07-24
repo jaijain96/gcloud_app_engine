@@ -1,16 +1,17 @@
 import asyncio, functools, time
 import requests
 
-base_url = "http://127.0.0.1"
+# base_url = "http://127.0.0.1"
 # base_url = "https://datalake-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"
 base_url = "https://datalake-django-api-dot-gcloud-hands-on-417608.uc.r.appspot.com"
-port = "8000"
+port = "8080"
 
 auth_token = ""
 headers = {
     # "Authorization": f"Bearer {auth_token}",
     "Content-Type": "application-json"
 }
+
 
 def response_print(response):
     try:
@@ -160,7 +161,9 @@ def operation_method_sync():
 async def operation_method_async():
     tasks = []
     for idx in range(1):
-        task = asyncio.create_task(asyncio.to_thread(functools.partial(make_request, idx)))
+        task = asyncio.create_task(
+            asyncio.to_thread(functools.partial(make_request, idx))
+        )
         tasks.append(task)
 
     for task in tasks:
